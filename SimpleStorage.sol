@@ -18,19 +18,25 @@ contract SimpleStorage {
 }
 
 contract Community {
-    struct User {
+   
+
+    struct UserInfo {
         address addr;
-        bytes32 name;
+        string name;
         uint age;
+        uint balance;
     }
 
-    User[] users;
+    UserInfo[] users;
+    mapping(address => uint) balances;
 
-    function addUser(address addr, bytes32 name, uint age) public {
-        users.push(User({addr: addr, name: name, age: age}));
+    function addUser(address addr, string memory name, uint age, uint balance) public {
+        users.push(UserInfo({addr: addr, name: name, age: age, balance: balance}));
+        balances[addr] = balance;
+
     }
 
-    function getUser(uint index) public view returns (address, bytes32, uint) {
-        return (users[index].addr, users[index].name, users[index].age);
+    function getUser(uint index) public view returns (address, string memory, uint, uint) {
+        return (users[index].addr, users[index].name, users[index].age, users[index].balance);
     }
 }
